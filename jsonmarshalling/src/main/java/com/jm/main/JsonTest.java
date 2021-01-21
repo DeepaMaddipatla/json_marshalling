@@ -13,18 +13,19 @@ import com.jm.serializer.PostSerializer;
 
 public class JsonTest {
 
-	public static void main(String[] args) throws JsonGenerationException, JsonMappingException, IOException   {
+	public static void main(String[] args) {
 		Post post = getObjectData();
 		ObjectMapper mapper = new ObjectMapper();
-	    mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-		SimpleModule module = new SimpleModule();
-		module.addSerializer(Post.class, new PostSerializer());
-		mapper.registerModule(module);
-		String value = mapper.writeValueAsString(post);
-		System.out.println(value);
-	}
+		try {
+			mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+			String json = mapper.writeValueAsString(post);
+			System.out.println(json);
 
-	 
+		}catch (IOException e){
+			e.printStackTrace();
+		}
+
+	}
 	private static Post getObjectData() {
 		Post post = new Post();
 		String var = "[{\"type\":\"image\",\"url\":\"azureblob.com/1\",\"aspect\":10,\"height\":11,\"width\":12,\"rotation\":13},{\"type\":\"image\",\"url\":\"azureblob.com/1\",\"aspect\":10,\"height\":11,\"width\":12,\"rotation\":13}]";

@@ -10,9 +10,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.jm.serializer.PostSerializer;
 
 
-//@JsonIgnoreProperties("imagesJSON")
+@JsonSerialize(using = PostSerializer.class)
 public class Post {
 	
 	public String userId; 
@@ -40,7 +41,6 @@ public class Post {
 	public void setPostId(Long postId) {
 		this.postId = postId;
 	}
-	 //@JsonIgnore
 	public String getImagesJSON() {
 		return imagesJSON;
 	}
