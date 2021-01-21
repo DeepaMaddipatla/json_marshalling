@@ -8,7 +8,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.node.IntNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.node.TextNode;
 import com.fasterxml.jackson.databind.node.ValueNode;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.jm.app.Post;
@@ -43,8 +45,14 @@ public class PostSerializer extends StdSerializer<Post> {
 				JsonNode value2 = next.getValue();
 				if (value2.isValueNode()) {
 					ValueNode valueNode = (ValueNode) value2;
+						if (valueNode instanceof TextNode) {
+							jgen.writeStringField(next.getKey(), valueNode.asText());
+						}else if ( valueNode instanceof IntNode) {
+
+							jgen.writeNumberField(next.getKey(), valueNode.asInt());
+
+						}
 					
-					jgen.writeStringField(next.getKey(), valueNode.asText());
 				}
 			}
 			jgen.writeEndObject();
